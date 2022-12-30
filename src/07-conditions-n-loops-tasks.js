@@ -283,8 +283,31 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(cnn) {
+  const arr = cnn.toString().split('').map((el) => +el);
+  let sum = 0;
+  if (arr.length % 2 === 0) {
+    for (let i = 0; i < arr.length; i += 1) {
+      if (i % 2 === 1) {
+        sum += arr[i];
+      } else if (i % 2 === 0 && arr[i] * 2 > 9) {
+        sum += arr[i] * 2 - 9;
+      } else {
+        sum += arr[i] * 2;
+      }
+    }
+  } else {
+    for (let i = 0; i < arr.length; i += 1) {
+      if (i % 2 === 0) {
+        sum += arr[i];
+      } else if (i % 2 === 1 && arr[i] * 2 > 9) {
+        sum += arr[i] * 2 - 9;
+      } else {
+        sum += arr[i] * 2;
+      }
+    }
+  }
+  return sum % 10 === 0;
 }
 
 /**
@@ -332,10 +355,17 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(/* str */) {
-  // let obj = {}
-  // str.split('').forEach(el => {
-  //   obj[el] = (obj[el]) ? obj[el] +1 : 1;
-  // })
+  // const arr1 = ['[', ']', '{', '}', '(', ')', '<', '>'];
+  // const arr2 = str.split('');
+  // if (arr2.length === 0) return true;
+  // if (arr1.indexOf(arr2[0]) % 2 === 1) return false;
+  // const obj = {};
+  // for (let i = 0; i < arr2.length; i += 1) {
+  //   obj[arr2[i]] = (obj[arr2[i]] || 0) + 1;
+  // }
+  // return (obj['['] === obj[']'] && obj['{'] === obj['}'] &&
+  // obj['('] === obj[')'] && obj['<'] === obj['>']);
+  // const arr1 = ['[]', '{}', '()', '<>'];
   throw new Error('Not implemented');
 }
 
@@ -360,8 +390,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -377,8 +407,19 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = [...pathes].map((el) => el.split('/'));
+  const res = [];
+  for (let j = 0; j < arr[0].length; j += 1) {
+    let flag = true;
+    for (let i = 1; i < arr.length; i += 1) {
+      flag = flag && arr[i][j] === arr[0][j];
+    }
+    if (flag) res.push(arr[0][j]);
+  }
+  if (res.length !== 0) return `${res.join('/')}/`;
+  if (res.length === 1) return '/';
+  return '';
 }
 
 
@@ -400,8 +441,21 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const arr = [];
+  let subarr = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    for (let j = 0; j < m1.length; j += 1) {
+      let el = 0;
+      for (let k = 0; k < m2.length; k += 1) {
+        el += m1[i][k] * m2[k][j];
+      }
+      subarr.push(el);
+    }
+    arr.push(subarr);
+    subarr = [];
+  }
+  return arr;
 }
 
 
