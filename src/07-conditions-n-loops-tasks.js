@@ -354,19 +354,20 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  // const arr1 = ['[', ']', '{', '}', '(', ')', '<', '>'];
-  // const arr2 = str.split('');
-  // if (arr2.length === 0) return true;
-  // if (arr1.indexOf(arr2[0]) % 2 === 1) return false;
-  // const obj = {};
-  // for (let i = 0; i < arr2.length; i += 1) {
-  //   obj[arr2[i]] = (obj[arr2[i]] || 0) + 1;
-  // }
-  // return (obj['['] === obj[']'] && obj['{'] === obj['}'] &&
-  // obj['('] === obj[')'] && obj['<'] === obj['>']);
-  // const arr1 = ['[]', '{}', '()', '<>'];
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const arr1 = ['[]', '{}', '()', '<>'];
+  let arr2 = [str];
+
+  while (arr2.join('').includes('[]') || arr2.join('').includes('{}') || arr2.join('').includes('()') || arr2.join('').includes('<>')) {
+    for (let i = 0; i < arr1.length; i += 1) {
+      if (arr2.join('').includes(arr1[i])) {
+        const newStr = arr2.join('').split(`${arr1[i]}`).join('');
+        arr2 = [];
+        arr2.push(newStr);
+      }
+    }
+  }
+  return (!arr2.toString());
 }
 
 
@@ -489,8 +490,20 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const win = [
+    [position[0][0], position[0][1], position[0][2]],
+    [position[1][0], position[1][1], position[1][2]],
+    [position[2][0], position[2][1], position[2][2]],
+    [position[0][0], position[1][0], position[2][0]],
+    [position[0][1], position[1][1], position[2][1]],
+    [position[0][2], position[1][2], position[2][2]],
+    [position[0][0], position[1][1], position[2][2]],
+    [position[0][2], position[1][1], position[2][0]],
+  ];
+  if (win.some((sub) => sub.every((el) => el === 'X'))) return 'X';
+  if (win.some((sub) => sub.every((el) => el === '0'))) return '0';
+  return undefined;
 }
 
 
